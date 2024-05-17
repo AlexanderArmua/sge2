@@ -1,0 +1,40 @@
+{
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "module": "commonjs",
+    "lib": ["ES2022", "esnext.asynciterable", "WebWorker"],
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ESNext",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "noImplicitAny": false,
+    "importHelpers": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "strictBindCallApply": false,
+    "esModuleInterop": true,
+    "paths": {
+      "@services/*": ["services/*"],
+      "@config": ["config"],
+      "@custom-types/*": ["types/*"],
+      "@repositories/*": ["repositories/*"],
+      "@controllers/*": ["controllers/*"],
+      "@routes/*": ["routes/*"],
+      "@middlewares/*": ["middlewares/*"],
+      "@db/*": ["lib/db/*"],
+      "@logger": ["lib/logger"],
+      "@events": ["lib/events"]
+    }
+  }
+}
