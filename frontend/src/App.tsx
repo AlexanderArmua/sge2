@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 
-
+const serverUrl = import.meta.env.VITE_BACKEND_URL;
 
 function App() {
   const [todos, setTodos] = useState<{ title: string, done: boolean, id: number }[]>([]);
@@ -17,7 +17,7 @@ function App() {
   }, [])
 
   const callTodos = async () => {
-    await axios.get('http://localhost:3000/api/todos').then((res) => {
+    await axios.get(`${serverUrl}/api/todos`).then((res) => {
       setTodo('');
       setTodos(res.data);
     });
@@ -26,7 +26,7 @@ function App() {
   const sendNewTodo = async (e: any) => {
     e.preventDefault();
 
-    await axios.post('http://localhost:3000/api/todos', { title: todo }).then((res) => {
+    await axios.post(`${serverUrl}/api/todos`, { title: todo }).then((res) => {
       setTodos([...todos, res.data]);
     });
 
@@ -34,7 +34,7 @@ function App() {
   }
 
   const updateTodo = async (id: number, done: boolean) => {
-    await axios.put(`http://localhost:3000/api/todos/${id}`, { done }).then((res) => {
+    await axios.put(`${serverUrl}/api/todos/${id}`, { done }).then((res) => {
       setTodos(todos.map((todo) => todo.id === id ? { ...todo, done } : todo));
     });
 

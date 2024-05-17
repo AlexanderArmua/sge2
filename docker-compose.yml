@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  # server:
+  #   build: .
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - postgres
+  #   restart: on-failure
+  #   networks:
+  #     - mynet
+
+  # frontend
+  # TODO: Add frontend service
+
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=sge_2
+      - POSTGRES_USER=alexander
+      - POSTGRES_PASSWORD=admin1234
+    ports:
+      - 5455:5432
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    networks:
+      - mynet
+
+# networks:
+#   mynet:
+#     driver: bridge
+#     ipam:
+#       driver: defaults
