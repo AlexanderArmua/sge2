@@ -4,10 +4,11 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "nodemon",
+        "dev": "nodemon src/index.ts",
         "test": "test",
         "build": "tsc",
-        "postinstall": "prisma generate"
+        "postinstall": "prisma generate",
+        "tscheck": "tsc --project tsconfig.json"
     },
     "author": "",
     "license": "ISC",

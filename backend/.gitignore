@@ -41,3 +41,7 @@ lerna-debug.log*
 
 # Executables
 Makefile
+.vercel
+
+# Prisma
+/prisma/generated

@@ -34,7 +34,7 @@ function App() {
   }
 
   const updateTodo = async (id: number, done: boolean) => {
-    await axios.put(`${serverUrl}/api/todos/${id}`, { done }).then((res) => {
+    await axios.put(`${serverUrl}/api/todos/${id}`, { done }).then(() => {
       setTodos(todos.map((todo) => todo.id === id ? { ...todo, done } : todo));
     });
 
