@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/todos', async (req, res) => {
-    const allTodos = await prisma.todo.findMany();
+    const allTodos = await prisma.todo.findMany({ orderBy: { id: 'desc' } });
 
     res.json(allTodos);
 });
@@ -32,6 +32,22 @@ app.post('/api/todos', async (req, res) => {
     const todo = await prisma.todo.create({
         data: {
             title,
+            done,
+        },
+    });
+
+    res.json(todo);
+});
+
+app.put('/api/todos/:id', async (req, res) => {
+    const { id } = req.params;
+    const { done } = req.body;
+
+    const todo = await prisma.todo.update({
+        where: {
+            id: Number(id),
+        },
+        data: {
             done,
         },
     });

@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import axios from 'axios'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Checkbox } from "@/components/ui/checkbox"
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   const [todos, setTodos] = useState<{ title: string, done: boolean, id: number }[]>([]);
   const [todo, setTodo] = useState('');
 
@@ -31,42 +33,51 @@ function App() {
     await callTodos();
   }
 
+  const updateTodo = async (id: number, done: boolean) => {
+    await axios.put(`http://localhost:3000/api/todos/${id}`, { done }).then((res) => {
+      setTodos(todos.map((todo) => todo.id === id ? { ...todo, done } : todo));
+    });
+
+    await callTodos();
+  }
+
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <img src={reactLogo} className="logo react" alt="React logo" />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1 className="text-3xl font-bold underline">
+        SGE 2.0
+      </h1>
 
       <form onSubmit={sendNewTodo}>
-        <input type="text" value={todo} onChange={(e) => setTodo(e.target.value)}/>
+       <div>
+         <label htmlFor="newTodo" className="block text-sm font-medium leading-6 text-gray-900">
+          Nuevo To-Do
+        </label>
+        <Input
+          value={todo} onChange={(e) => setTodo(e.target.value)}
+          type="text"
+          name="newTodo"
+          id="newTodo"
+          className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          placeholder="Completar el Proyecto Final"
+        />
+        <Button onClick={sendNewTodo}>Crear</Button>
+       </div>
       </form>
+      <ul className="list-disc">
       {
         todos.map((todo) => (
-          <div key={todo.id}>
+          <li key={todo.id}>
             <label>
-               <input type="checkbox" defaultChecked={todo.done}/>
-              {todo.title}
+              <Checkbox type='button' checked={todo.done} onClick={() => updateTodo(todo.id, !todo.done)}/>
+              {todo.id} - {todo.title}
             </label>
-          </div>
+          </li>
         ))
       }
+      </ul>
     </>
   )
 }
