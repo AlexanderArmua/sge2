@@ -12,6 +12,11 @@ sge2
 
 ## Todos
 - front + Back: tRPC - https://trpc.io
+- Add environment variables on Backend
+- Add environment variables on Frontend
+- Communicate frontend with backend on Vercel
+- Create GithubActions to deploy automatically to Vercel
+- Add Prisma generate on each backend deployment
 
 ## Links
 - TailwindCss: https://tailwindcss.com/docs/utility-first
