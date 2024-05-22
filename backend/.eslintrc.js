@@ -4,24 +4,13 @@ module.exports = {
 		sourceType: 'module',
 	},
 	plugins: ['@typescript-eslint/eslint-plugin', 'prettier', 'import'],
-	extends: [
-		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
-		'plugin:prettier/recommended',
-	],
+	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
 	root: true,
 	env: {
 		node: true,
 		jest: true,
 	},
-	ignorePatterns: [
-		'.eslintrc.js',
-		'*.spec.ts',
-		'*-spec.ts',
-		'**/types.ts',
-		'**/constants.ts',
-		'**/enums.ts',
-	],
+	ignorePatterns: ['.eslintrc.js', '*.spec.ts', '*-spec.ts', '**/types.ts', '**/constants.ts', '**/enums.ts'],
 	rules: {
 		'@typescript-eslint/interface-name-prefix': 'off',
 		'prefer-object-spread': 'error',
@@ -65,9 +54,8 @@ module.exports = {
 		'@typescript-eslint/member-delimiter-style': 'error',
 		'no-unsafe-finally': 'error',
 		'no-self-assign': 'error',
-		'@typescript-eslint/explicit-function-return-type': 2,
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
-		'@typescript-eslint/no-explicit-any': 2,
+		'@typescript-eslint/no-explicit-any': 0,
 		'@typescript-eslint/no-unused-vars': [
 			2,
 			{

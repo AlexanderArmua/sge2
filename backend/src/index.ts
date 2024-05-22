@@ -1,60 +1,38 @@
-import { PrismaClient } from '@prisma/client';
+import { AppConfig } from '@config';
+import { logger } from '@logger';
+import { boomErrorHandler, errorHandler, logErrors } from '@middlewares/errorMiddleware';
+import { responseFormatterMiddleware } from '@middlewares/express-extended-response';
+import routerApi from '@routes/index';
 import express from 'express';
-import helmet from 'helmet';
-import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../swagger.json';
+import './@types/express';
 
-const port = 3000;
 const app = express();
 
-const prisma = new PrismaClient();
-
-app.use(helmet());
-
-app.use(cors());
-
+// Allow to receive JSON
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World 2');
-});
+// Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.get('/api/todos', async (req, res) => {
-    const allTodos = await prisma.todo.findMany({ orderBy: { id: 'desc' } });
+// TODO: Middleware `passport saml` cookie & token?
 
-    res.json(allTodos);
-});
+// Generic response middleware
+app.use(responseFormatterMiddleware);
 
-app.post('/api/todos', async (req, res) => {
-    console.log(req.body)
+// Define all routes
+routerApi(app);
 
-    const { title, done = false } = req.body;
+// Log any error
+app.use(logErrors);
 
-    const todo = await prisma.todo.create({
-        data: {
-            title,
-            done,
-        },
-    });
+// Boom error handlers
+app.use(boomErrorHandler);
 
-    res.json(todo);
-});
+// Non Boom error handlers
+app.use(errorHandler);
 
-app.put('/api/todos/:id', async (req, res) => {
-    const { id } = req.params;
-    const { done } = req.body;
-
-    const todo = await prisma.todo.update({
-        where: {
-            id: Number(id),
-        },
-        data: {
-            done,
-        },
-    });
-
-    res.json(todo);
-});
-
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+app.listen(AppConfig.port, () => {
+	logger.info(`SGE 2.0 - Listening on port: ${AppConfig.port}`);
 });
