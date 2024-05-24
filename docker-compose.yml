@@ -1,21 +1,34 @@
 version: '3.8'
 
 services:
-  # server:
-  #   build: .
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - postgres
-  #   restart: on-failure
-  #   networks:
-  #     - mynet
-
-  # frontend
-  # TODO: Add frontend service
-
-  postgres:
+  frontend:
+    image: sge-front
+    container_name: sge-front-container
+    build:
+      context: frontend
+    ports:
+      - 5173:5173
+    restart: always
+    depends_on:
+      - backend
+    networks:
+      - net-front
+  backend:
+    image: sge-back
+    container_name: sge-back-container
+    build:
+      context: backend
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - net-front
+      - net-back
+  db:
     image: postgres:13
+    container_name: sge-db-container
     environment:
       - POSTGRES_DB=sge_2
       - POSTGRES_USER=alexander
@@ -23,12 +36,13 @@ services:
     ports:
       - 5455:5432
     volumes:
-      - ./postgres_data:/var/lib/postgresql/data
+     - pgdata:/var/lib/postgresql/data
     networks:
-      - mynet
+     - net-back
 
-# networks:
-#   mynet:
-#     driver: bridge
-#     ipam:
-#       driver: defaults
+networks:
+  net-front:
+  net-back:
+
+volumes:
+  pgdata:

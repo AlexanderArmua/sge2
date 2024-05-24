@@ -8,12 +8,8 @@ COPY package-lock.json .
 
 RUN npm install
 
-COPY .env .env
-
 COPY . .
 
-# RUN npm run migrate:prod
-
-EXPOSE 3000
+EXPOSE 5173
 
 CMD ["npm", "run", "dev"]
