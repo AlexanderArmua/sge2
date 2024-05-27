@@ -23,6 +23,7 @@
     "target": "ESNext",
     "sourceMap": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
@@ -65,5 +66,11 @@
         "lib/events"
       ]
     }
-  }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+  ]
 }

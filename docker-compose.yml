@@ -1,34 +1,47 @@
-version: '3.8'
+version: "3.8"
 
 services:
+  # Frontend Service
   frontend:
-    image: sge-front
-    container_name: sge-front-container
+    image: sge2-front
+    container_name: sge2-front-container
     build:
-      context: frontend
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - 5173:5173
-    restart: always
+      - 80:80
+    restart: on-failure
     depends_on:
       - backend
     networks:
       - net-front
+    environment:
+      - NODE_ENV=production
+      - SERVER_URL=http://backend:3000
+
+  # Backend Service
   backend:
-    image: sge-back
-    container_name: sge-back-container
+    image: sge2-back
+    container_name: sge2-back-container
     build:
-      context: backend
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - 3000:3000
     depends_on:
       - db
-    restart: always
+    restart: on-failure
     networks:
       - net-front
       - net-back
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://alexander:admin1234@db:5432/sge_2
+
+  # Database Service
   db:
     image: postgres:13
-    container_name: sge-db-container
+    container_name: sge2-db-container
     environment:
       - POSTGRES_DB=sge_2
       - POSTGRES_USER=alexander
@@ -36,13 +49,20 @@ services:
     ports:
       - 5455:5432
     volumes:
-     - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
     networks:
-     - net-back
+      - net-back
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "alexander"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
   net-front:
+    driver: bridge
   net-back:
+    driver: bridge
 
 volumes:
   pgdata:
