@@ -1,3 +1,5 @@
+import 'tsconfig-paths/register';
+
 import { AppConfig } from '@config';
 import { logger } from '@logger';
 import { boomErrorHandler, errorHandler, logErrors } from '@middlewares/errorMiddleware';
@@ -5,7 +7,6 @@ import { responseFormatterMiddleware } from '@middlewares/express-extended-respo
 import routerApi from '@routes/index';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import 'tsconfig-paths/register';
 import swaggerDocument from '../swagger.json';
 import './@types/express';
 
