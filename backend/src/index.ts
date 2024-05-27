@@ -1,3 +1,5 @@
+import 'tsconfig-paths/register';
+
 import { AppConfig } from '@config';
 import { logger } from '@logger';
 import { boomErrorHandler, errorHandler, logErrors } from '@middlewares/errorMiddleware';
