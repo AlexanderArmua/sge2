@@ -9,15 +9,6 @@ COPY package*.json ./
 # Copy application source code
 COPY . .
 
-# Copy prisma config
-COPY prisma ./prisma
-
-# Generate all Prisma client code
-# RUN npm run migrate:generate
-RUN npm run migrate:generate
-
-RUN ls -al
-
 # TODO: Try to add ` --omit=dev` back
 RUN npm ci
 

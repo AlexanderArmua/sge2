@@ -9,7 +9,7 @@
 		"dev": "nodemon --exec ts-node src/index.ts",
 		"start": "node -r tsconfig-paths/register dist/index.js",
 		"test": "jest --maxWorkers=2 --silent",
-		"build": "npx prisma generate && tsc && tsc-alias",
+		"build": "tsc && tsc-alias",
 		"postinstall": "npx prisma generate",
 		"tscheck": "tsc --project tsconfig.json",
 		"migrate:generate": "npx prisma generate",
@@ -17,8 +17,7 @@
 		"migrate:dev": "npx prisma migrate dev --create-only --name",
 		"migrate:prod": "npx prisma migrate deploy",
 		"migrate:reset": "npx prisma migrate reset",
-		"migrate:rollback": "npx prisma migrate resolve --rolled-back",
-		"db:push": "npx prisma db push"
+		"migrate:rollback": "npx prisma migrate resolve --rolled-back"
 	},
 	"dependencies": {
 		"@hapi/boom": "^10.0.1",
