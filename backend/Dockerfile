@@ -6,13 +6,20 @@ WORKDIR /usr/src/app
 # Copy package files and install dependencies
 COPY package*.json ./
 
-# TODO: Try to add ` --omit=dev` back
-RUN npm ci
-
 # Copy application source code
 COPY . .
 
-RUN npx prisma generate
+# Copy prisma config
+COPY prisma ./prisma
+
+# Generate all Prisma client code
+# RUN npm run migrate:generate
+RUN npm run migrate:generate
+
+RUN ls -al
+
+# TODO: Try to add ` --omit=dev` back
+RUN npm ci
 
 # Compile TypeScript files to JavaScript
 RUN npm run build

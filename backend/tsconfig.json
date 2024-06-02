@@ -42,7 +42,7 @@
         "config"
       ],
       "@custom-types/*": [
-        "types/*"
+        "@types/*"
       ],
       "@repositories/*": [
         "repositories/*"
