@@ -11,4 +11,7 @@
     "editor.codeActionsOnSave": {
         "source.organizeImports": "always",
     },
+    "[typescriptreact]": {
+        "editor.formatOnSave": true
+    }
 }

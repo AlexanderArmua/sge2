@@ -53,7 +53,7 @@ export class TodosService {
 		return newTodo;
 	}
 
-	async update(todoId: number, todo: { title: string; done?: boolean }): Promise<any | null> {
+	async update(todoId: number, todo: { title?: string; done?: boolean }): Promise<any | null> {
 		const log = logger.child({ method: 'update' });
 
 		if (!todoId) {
@@ -61,7 +61,7 @@ export class TodosService {
 			throw new Error('Error updating todo by missing id');
 		}
 
-		if (!todo || !todo.title) {
+		if (!todo) {
 			log.error({ todoId, todo }, 'Error updating todo by missing title');
 			throw new Error('Error updating todo by missing title');
 		}

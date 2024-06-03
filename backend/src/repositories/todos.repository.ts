@@ -34,7 +34,7 @@ const createTodo = async (todo: { title: string; done?: boolean }) => {
 	return newTodo;
 };
 
-const updateTodo = async (todoId: number, todo: { title: string; done?: boolean }) => {
+const updateTodo = async (todoId: number, todo: { title?: string; done?: boolean }) => {
 	const updatedTodo = await prisma.todo.update({
 		where: {
 			id: todoId,

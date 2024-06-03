@@ -5,12 +5,16 @@ import { logger } from '@logger';
 import { boomErrorHandler, errorHandler, logErrors } from '@middlewares/errorMiddleware';
 import { responseFormatterMiddleware } from '@middlewares/express-extended-response';
 import routerApi from '@routes/index';
+import cors from 'cors';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger.json';
 import './@types/express';
 
 const app = express();
+
+// TODO @Alex: Fix CORS in PRD
+app.use(cors());
 
 // Allow to receive JSON
 app.use(express.json());
